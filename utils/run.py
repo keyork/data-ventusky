@@ -15,8 +15,8 @@ import json
 import argparse
 import numpy as np
 
-DELTA_LON = 1
-DELTA_LAT = 18
+DELTA_LON = 30
+DELTA_LAT = 30
 ROOT_PATH = "./data/"
 
 
@@ -29,6 +29,7 @@ def get_data(args):
     for lon in np.linspace(
         start_lon, start_lon + DELTA_LON, DELTA_LON * 4, endpoint=False
     ):
+        print(lon)
         for lat in np.linspace(
             start_lat, start_lat + DELTA_LAT, DELTA_LAT * 4, endpoint=False
         ):

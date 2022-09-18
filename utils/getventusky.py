@@ -39,20 +39,26 @@ class VentuskyDataCrawler:
         selector = etree.HTML(str(soup))
         precipitation = []
         for hour in range(24):
-            precipitation.append(
-                float(
-                    selector.xpath(
-                        '//*[@id="forecast"]/div[2]/table/tbody/tr/td['
-                        + str(hour + 1)
-                        + "]/span[2]"
-                    )[0].text[0:-3]
+            try:
+                precipitation.append(
+                    float(
+                        selector.xpath(
+                            '//*[@id="forecast"]/div[2]/table/tbody/tr/td['
+                            + str(hour + 1)
+                            + "]/span[2]"
+                        )[0].text.split(" ")[0]
+                    )
                 )
+            except:
+                precipitation.append(float(-9999))
+        try:
+            self.temperature = float(
+                selector.xpath(
+                    '//*[@id="meteogram"]/div[2]/div/div[1]/svg/g[6]/text[1]'
+                )[0].text
             )
-        self.temperature = float(
-            selector.xpath('//*[@id="meteogram"]/div[2]/div/div[1]/svg/g[6]/text[1]')[
-                0
-            ].text
-        )
+        except:
+            self.temperature = float(-9999)
         self.precipitation = np.array(precipitation, dtype=float).max()
 
 
